@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HEADER_IMG_URL } from "../../utils/constants";
+import { Link } from "react-router-dom";
 const Header = () => {
   const [btnName, setBtnName] = useState("login");
   // let btnName = "login"
 
-  const newButton = () => {
-    setBtnName(!btnName);
-    console.log("button clicked");
-  };
-  console.log("header render");
+  useEffect(() => {
+    console.log("Header rendered");
+  });
 
   return (
     <div className="header-container">
@@ -17,11 +16,23 @@ const Header = () => {
       </div>
       <div className="nav-items">
         <ul className="nav-list">
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact Us</Link>
+          </li>
           <li>Cart</li>
-          <button onClick={()=> setBtnName(newButton)}>{btnName}</button>
+          <button
+            onClick={() => {
+              btnName == "login" ? setBtnName("logout") : setBtnName("login");
+            }}
+          >
+            {btnName}
+          </button>
         </ul>
       </div>
     </div>

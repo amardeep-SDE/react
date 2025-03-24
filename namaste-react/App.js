@@ -3,6 +3,11 @@ import ReactDOM from "react-dom/client";
 import Body from "./src/components/Body";
 import RestaurantCard from "./src/components/RestaurantCard";
 import Header from "./src/components/Header";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import About from "./src/components/About";
+import Contact from "./src/components/Contact";
+import Error from "./src/components/Error";
+import RestaurantMenu from "./src/components/RestaurantMenu";
 // const Header = () => {
 //   return (
 //     <div className="header-container">
@@ -54,8 +59,6 @@ import Header from "./src/components/Header";
 //       <RestaurantCard name="Domino's Pizza" cuisine="Biryani, Fast Food, Snacks" rating="4.2⭐" time="30min | 400₹"/>
 //       <RestaurantCard name= "Biryani Express" cuisine="Biryani, Fast Food, Snacks" rating="4.2⭐" time="30min | 400₹"/>
 //       <RestaurantCard name="Domino's Pizza" cuisine="Biryani, Fast Food, Snacks" rating="4.2⭐" time="30min | 400₹"/>
-      
-      
 
 //     </div>
 //     </div>
@@ -64,13 +67,39 @@ import Header from "./src/components/Header";
 const AppLayout = () => {
   return (
     <div className="App">
-    <Header/>
-   <Body/>
+      <Header />
+      <Outlet />
     </div>
   );
-}
-  
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  console.log(root);
-  
-  root.render(<AppLayout/>);
+};
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/menu/:resId",
+        element: <RestaurantMenu/>
+      }
+    ],
+    errorElement: <Error />,
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+console.log(root);
+
+root.render(<RouterProvider router={appRouter} />);
