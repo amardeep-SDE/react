@@ -64,9 +64,12 @@ const Body = () => {
               onClick={() => {
                 {
                   const filteredData = listOfRestaurants.filter(
-                    (item) => item?.info?.avgRating >= 4.4
+                    (item) => item?.info?.avgRating > 4.6
                   );
+                  console.log(filteredData);
+
                   setListOfRestaurants(filteredData);
+                  
                 }
                 // setListOfRestaurants((prev) => [...prev].sort((a, b) => b?.info?.avgRating - a?.info?.avgRating));
               }}
