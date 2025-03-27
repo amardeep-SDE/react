@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../../utils/useOnlineStatus";
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   console.log("body render");
+
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
     fetchData();
@@ -29,6 +32,13 @@ const Body = () => {
     }
   };
 
+  if (onlineStatus === false) {
+    return (
+      <h1>You are offline , please check your internet connection !!</h1>
+
+    )
+  }
+
   return (
     <>
       {listOfRestaurants.length === 0 ? (
@@ -48,8 +58,10 @@ const Body = () => {
               ></input>
               <button
                 onClick={() => {
-                  const filteredData = listOfRestaurants.filter(
-                    (item) => item.info.name.toLowerCase().includes(searchText.toLowerCase())
+                  const filteredData = listOfRestaurants.filter((item) =>
+                    item.info.name
+                      .toLowerCase()
+                      .includes(searchText.toLowerCase())
                   );
                   console.log(filteredData);
                   setFilteredRestaurants(filteredData);
@@ -69,7 +81,6 @@ const Body = () => {
                   console.log(filteredData);
 
                   setListOfRestaurants(filteredData);
-                  
                 }
                 // setListOfRestaurants((prev) => [...prev].sort((a, b) => b?.info?.avgRating - a?.info?.avgRating));
               }}
