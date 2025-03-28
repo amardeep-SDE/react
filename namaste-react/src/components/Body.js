@@ -46,17 +46,18 @@ const Body = () => {
           <Shimmer />
         </div>
       ) : (
-        <div className="body-container">
-          <div className="filter-container">
+        <div className="">
+          <div className="flex m-3 p-3">
             <div className="filter">
               <input
                 type="text"
                 placeholder="Search"
-                className="search"
+                className="border border-gray-400 p-1 rounded-md"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               ></input>
               <button
+              className="m-3 bg-blue-400 px-3 py-1 rounded-md"
                 onClick={() => {
                   const filteredData = listOfRestaurants.filter((item) =>
                     item.info.name
@@ -72,7 +73,7 @@ const Body = () => {
             </div>
 
             <button
-              className="filter"
+              className="m-3 bg-green-300 px-3 py-1 rounded-md"
               onClick={() => {
                 {
                   const filteredData = listOfRestaurants.filter(
@@ -88,7 +89,7 @@ const Body = () => {
               Top Rated Restaurant
             </button>
           </div>
-          <div className="res-container">
+          <div className="flex flex-wrap ">
             {filteredRestaurants.map((restaurant) => (
               <RestaurantCard key={restaurant?.info.id} {...restaurant?.info} />
             ))}
