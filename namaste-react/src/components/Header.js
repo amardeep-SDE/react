@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HEADER_IMG_URL } from "../../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../../utils/useOnlineStatus";
+import userContext from "../../utils/userContext";
 const Header = () => {
   const [btnName, setBtnName] = useState("login");
   // let btnName = "login"
@@ -10,6 +11,9 @@ const Header = () => {
   useEffect(() => {
     console.log("Header rendered");
   });
+  
+  const {loggedInUser} = useContext(userContext);
+  console.log(loggedInUser);
   
 
   return (
@@ -20,6 +24,9 @@ const Header = () => {
       <div className="nav-items mx-3">
         <ul className="flex p-4 gap-4">
           <li className="px-4">OnlineStatus : {onlineStatus ? "Online" : "Offline"}</li>
+          <li>
+            <h4 className="text-xl">{loggedInUser}</h4>
+          </li>
           <li>
             <Link to="/">Home</Link>
           </li>

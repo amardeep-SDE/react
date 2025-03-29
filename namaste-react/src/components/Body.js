@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../../utils/useOnlineStatus";
+import userContext from "../../utils/userContext";
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -10,6 +11,10 @@ const Body = () => {
   console.log("body render");
 
   const onlineStatus = useOnlineStatus();
+
+  const {loggedInUser, setUserName} = useContext(userContext);
+  console.log(loggedInUser);
+  
 
   useEffect(() => {
     fetchData();
@@ -88,6 +93,7 @@ const Body = () => {
             >
               Top Rated Restaurant
             </button>
+            <input className="m-3 border border-gray-400 p-1 rounded-md" value={loggedInUser} type="text" onChange={(e) => setUserName(e.target.value)}/>
           </div>
           <div className="flex flex-wrap ">
             {filteredRestaurants.map((restaurant) => (

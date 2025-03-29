@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { RESTAURANT_IMG_URL } from "../../utils/constants";
+import userContext from "../../utils/userContext";
 const RestaurantCard = (props) => {
   const { id, cloudinaryImageId, name, cuisines, avgRating, deliveryTime } = props;
+
+  const {loggedInUser} = useContext(userContext);
+
 
   // RESTAURANT_IMG_URL + cloudinary_id + image_format
   return (
@@ -18,6 +23,7 @@ const RestaurantCard = (props) => {
           <p>
             ⭐ {avgRating} | 🚚 {deliveryTime} mins
           </p>
+          <p>{loggedInUser}</p>
         </div>
     </>
   );
