@@ -9,30 +9,29 @@ import Error from "./src/components/Error";
 import RestaurantMenu from "./src/components/RestaurantMenu";
 import { useState, useEffect } from "react";
 import userContext from "./utils/userContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 const About = lazy(() => import("./src/components/About"));
 const AppLayout = () => {
-
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-
     const data = {
       name: "Amardeep ",
     };
     setUserName(data.name);
-  }, [])
+  }, []);
 
   return (
     <>
-<userContext.Provider value= {{loggedInUser: userName , setUserName}}>
-      <div className="App">
-        <Header />
-        <Outlet />
-      </div>
-      </userContext.Provider>
+      <Provider store={appStore}>
+        <div className="App">
+          <Header />
+          <Outlet />
+        </div>
+      </Provider>
     </>
-    
   );
 };
 

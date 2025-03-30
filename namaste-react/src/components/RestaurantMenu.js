@@ -7,13 +7,13 @@ import {
 import { useParams } from "react-router";
 import "../css/menu.css";
 import useRestaurantMenu from "../../utils/useRestaurantMenu";
-
+import { useDispatch } from "react-redux";
+import { addItem } from "../../utils/cartSlice";
 const RestaurantMenu = () => {
   const { resId } = useParams();
 
   const { resInfo, resMenu } = useRestaurantMenu(resId);
 
-  
   if (resInfo === null) return <Shimmer />;
 
   const { name, areaName, cuisines, costForTwoMessage } = resInfo;
@@ -103,6 +103,13 @@ const NestedMenuCategory = (props) => {
 const MenuItem = ({ item }) => {
   const { name, description, price, defaultPrice, imageId } = item;
 
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    console.log("click");
+    dispatch(addItem(item));
+    console.log(item);
+  };
+
   return (
     <div className="menu-item">
       <div className="left">
@@ -113,8 +120,17 @@ const MenuItem = ({ item }) => {
         {price && <p>Price: ₹{(price / 100).toFixed(2)}</p>}
         {defaultPrice && <p>Price: ₹{(defaultPrice / 100).toFixed(2)}</p>}
       </div>
-
-      {imageId && <img src={RESTAURANT_MENU_IMG + imageId} alt={name} />}
+      <div>
+        <button
+          className="absolute bg-black text-white py-1 px-3 rounded-md m-2"
+          onClick={() => {
+            handleAddItem(item);
+          }}
+        >
+          Add
+        </button>
+        {imageId && <img src={RESTAURANT_MENU_IMG + imageId} alt={name} />}
+      </div>
     </div>
   );
 };
